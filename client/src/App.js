@@ -7,6 +7,7 @@ function App() {
   const [tags, setTags] = useState("")
   const [file, setFile] = useState(null)
   const [recentFive, setRecentFive] = useState([])
+  const [alertMsg, setAlertMsg] = useState('')
 
   function handleFileSelect(e) {
     console.log('e.target.files :>> ', e.target.files);
@@ -15,6 +16,10 @@ function App() {
 
   function handleFormSubmit(e) {
     e.preventDefault()
+    if (!file) {
+      setAlertMsg("Please select a file")
+      return //or use else {}
+    }
     // https://developer.mozilla.org/en-US/docs/Web/API/FormData
     const formData = new FormData() //FormData is a WEB API and here we are making an instance of it
     formData.append( "file", file )
@@ -25,8 +30,10 @@ function App() {
       url: 'http://localhost:3099/api/uploadImage',
       data: formData
     }).then(console.log).catch(console.log)
+    // Your `MulterError: File too large` is in response.data
 
     setTags("")
+    setAlertMsg("")
   }
 
   function handleGetRecent() {
@@ -52,6 +59,10 @@ function App() {
         <input type="file" onChange={handleFileSelect}/>
         <button type="submit">Upload</button>
       </form>
+
+      {alertMsg && (
+        <div style={{ margin: "0.6rem", color: "red" }}>{alertMsg}</div>
+      )}
 
       <section>
         <h3>Get recent uploads <button onClick={handleGetRecent}>Get</button></h3>

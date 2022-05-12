@@ -12,13 +12,14 @@ const handleUpload = upload.fields([{ name: "file", maxCount: 1 }])
 
 apiRouter
     .post("/uploadImage", handleUpload, async (req, res) => {
+
         // https://stackoverflow.com/questions/8107856/how-to-determine-a-users-ip-address-in-node
         // https://stackoverflow.com/questions/10849687/express-js-how-to-get-remote-client-address
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
-        console.log(req.headers['user-agent']);
-        console.log('ip :>> ', ip);; // ip address of the user
-        console.log('req.body.tags :>> ', req.body.tags);
-        console.log('req.files :>> ', req.files);
+        // console.log(req.headers['user-agent']);
+        // console.log('ip :>> ', ip);; // ip address of the user
+        // console.log('req.body.tags :>> ', req.body.tags);
+        // console.log('req.files :>> ', req.files);
         let tagArr = []
         if(req.body.tags.includes(",")){
             tagArr = (req.body.tags).split(',')
@@ -33,12 +34,11 @@ apiRouter
                 tags: tagArr,
                 user: { ip }
             })
+            res.json({ success: true })
           } catch (error) {
             res.status(500).json({ error: error.message })
             console.log('error :>> ', error);
           }
-        
-        res.json({ success: true })
     })
     .get("/recentUploads", async (req, res) => {
         const recentFive = await File.find().sort({'createdAt' : "descending"}).limit(5)
