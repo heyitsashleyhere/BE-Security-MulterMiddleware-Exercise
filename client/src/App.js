@@ -71,7 +71,7 @@ function App() {
             recentFive.map(f => {
               return (
                 <div key={f.filename}>
-                  <img src={`http://localhost:3099/api/${f._id}`} width={100} alt={f.path} />
+                  <img src={`http://localhost:3099/api/${f._id}`} width={300} alt={f.path} />
                   <p>{f.createdAt}</p>
                 </div>
               )

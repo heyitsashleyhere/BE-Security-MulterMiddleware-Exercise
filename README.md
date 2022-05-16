@@ -89,3 +89,6 @@ Try uploading a few images (under 1mb in size) to see that the upload facility w
 1. Create another endpoint with the path `/recentUploads`
 2. Use this path to connect to the database, and using the `sort()` method on the `uploadDate` field, and the `limit()` method, program it so that the server returns the last 5 uploaded images
 3. Display the last uploaded images on the upload page, below the form
+
+## My solution
+![demo](./client/public/demo.gif)
